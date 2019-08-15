@@ -1,0 +1,17 @@
+
+CREATE OR REPLACE FUNCTION lookup_bdt() RETURNS TRIGGER AS $$
+BEGIN
+    DELETE FROM diccionario
+    WHERE lookupid = OLD.lookupid;
+RETURN OLD;
+END
+$$
+LANGUAGE plpgsql;
+
+
+
+
+CREATE OR REPLACE TRIGGER lookup_bdt
+  BEFORE DELETE ON lookup
+  FOR EACH ROW
+  EXECUTE PROCEDURE trgfnc_lookupid();
